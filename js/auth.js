@@ -24,9 +24,10 @@ loginBtn.onclick = async () => {
 
   try {
     await signInWithEmailAndPassword(auth, email, password);
-  } catch (e) {
-    errorBox.innerText = "Invalid login";
-  }
+  }catch (e) {
+  console.error(e);
+  errorBox.innerText = e.code;
+}
 };
 
 logoutBtn.onclick = async () => {
