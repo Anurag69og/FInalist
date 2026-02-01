@@ -16,16 +16,16 @@ function loadQuotes() {
   if (!grid) return;
 
   grid.innerHTML = "";
-  QUOTES.forEach(q => {
-    const div = document.createElement("div");
-    div.className = "quote-box";
-    div.innerText = q;
-    grid.appendChild(div);
-  });
+  for (const q of QUOTES) {
+    const box = document.createElement("div");
+    box.className = "quote-box";
+    box.textContent = q;
+    grid.appendChild(box);
+  }
 }
 
-/* run once page loads */
-document.addEventListener("DOMContentLoaded", loadQuotes);
+/* run after page load */
+window.addEventListener("load", loadQuotes);
 
-/* run again after login */
+/* run after login */
 window.addEventListener("user-ready", loadQuotes);
