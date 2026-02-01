@@ -38,7 +38,7 @@ submitBtn.onclick = async () => {
     return;
   }
 
-  const ref = doc(db, "users", window.currentUser, today());
+  const ref = doc(db, "users", window.currentUser, "days", today());
   await setDoc(ref, { hours: Number(hours) });
 
   await loadData();
@@ -54,7 +54,7 @@ async function loadData() {
 
   for (let u of users) {
     const q = query(
-      collection(db, "users", u),
+      collection(db, "users", u, "days"),
       orderBy("__name__", "desc"),
       limit(7)
     );
