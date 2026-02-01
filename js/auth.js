@@ -15,11 +15,14 @@ const errorBox = document.getElementById("login-error");
 
 let isLoggingIn = false;
 
-loginBtn.onclick = async () => {
-  if (isLoggingIn) return; // 🔒 prevent spam
-  isLoggingIn = true;
+// global user setter
+window.setUser = (u) => {
+  window.currentUser = u;
+};
 
-  errorBox.innerText = "";
+loginBtn.onclick = async () => {
+  if (isLoggingIn) return;
+  isLoggingIn = true;
 
   const username = document.getElementById("username").value.trim().toLowerCase();
   const password = document.getElementById("password").value;
@@ -30,11 +33,9 @@ loginBtn.onclick = async () => {
     return;
   }
 
-  const email = `${username}@app.local`;
-
   try {
-    await setPersistence(auth, browserLocalPersistence); // stay logged in
-    await signInWithEmailAndPassword(auth, email, password);
+    await setPersistence(auth, browserLocalPersistence);
+    await signInWithEmailAndPassword(auth, `${username}@app.local`, password);
   } catch (e) {
     errorBox.innerText = e.code;
     isLoggingIn = false;
@@ -49,7 +50,7 @@ onAuthStateChanged(auth, (user) => {
   if (user) {
     loginScreen.classList.add("hidden");
     dashboard.classList.remove("hidden");
-    window.currentUser = user.email.split("@")[0];
+    window.setUser(user.email.split("@")[0]);
     isLoggingIn = false;
   } else {
     loginScreen.classList.remove("hidden");
