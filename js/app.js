@@ -130,16 +130,16 @@ setTimeout(loadData, 1500);
 
 /* ---------- MOTIVATION QUOTES (FINAL FIX) ---------- */
 const QUOTES = [
-  "Discipline beats motivation.",
-  "No zero days.",
-  "Do it even when you don’t feel like it.",
-  "Consistency is self-respect.",
-  "Small steps every day.",
-  "Future you is watching.",
-  "90 days can change your life.",
-  "Focus. Execute. Repeat.",
-  "One day or day one.",
-  "You will thank yourself later."
+  "Oieee padho padho, cheezein milengi bahut saari 😤📚",
+  "Aaj thoda padhega, kal boss banega 💪",
+  "Mobile baad me, future pehle 📵➡️🚀",
+  "Padh le bhai, regret mehenga hota hai 😭",
+  "Consistency = silent killer mode 🔥",
+  "Aaj ka struggle hi kal ka flex hai 💯",
+  "90 din chupchaap grind, phir noise hi noise 😎",
+  "Roz thoda, par roz pakka.",
+  "Padhega toh badhega (simple maths) 📈",
+  "Future wala tu, present wale tujhe yaad rakhega 👀"
 ];
 
 function loadQuotes() {
