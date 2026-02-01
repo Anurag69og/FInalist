@@ -1,6 +1,12 @@
 import { db } from "./firebase.js";
 import {
-  doc, setDoc, getDocs, collection, query, orderBy, limit
+  doc,
+  setDoc,
+  getDocs,
+  collection,
+  query,
+  orderBy,
+  limit
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const submitBtn = document.getElementById("submitBtn");
@@ -39,10 +45,15 @@ submitBtn.onclick = async () => {
   }
 
   const ref = doc(db, "users", window.currentUser, "days", today());
-  await setDoc(ref, { hours: Number(hours) });
 
-  await loadData();
-  alert("Saved!");
+  try {
+    await setDoc(ref, { hours: Number(hours) });
+    await loadData();
+    alert("Saved!");
+  } catch (e) {
+    console.error(e);
+    alert(e.message);
+  }
 };
 
 /* ---------- LOAD DATA ---------- */
@@ -53,23 +64,31 @@ async function loadData() {
   const totals = { arun: 0, kruti: 0 };
 
   for (let u of users) {
-    const q = query(
-      collection(db, "users", u, "days"),
-      orderBy("__name__", "desc"),
-      limit(7)
-    );
+    /* ---- 7 DAY HISTORY (ONLY LOGGED USER) ---- */
+    if (u === window.currentUser) {
+      const q7 = query(
+        collection(db, "users", u, "days"),
+        orderBy("__name__", "desc"),
+        limit(7)
+      );
 
-    const snap = await getDocs(q);
-    snap.forEach(d => {
-      if (u === window.currentUser) {
+      const snap7 = await getDocs(q7);
+      snap7.forEach(d => {
         const li = document.createElement("li");
         li.innerHTML = `<span>${d.id}</span><span>${d.data().hours}h</span>`;
         historyEl.appendChild(li);
-      }
+      });
+    }
+
+    /* ---- TOTAL COMPETITION (ALL DAYS) ---- */
+    const qAll = query(collection(db, "users", u, "days"));
+    const snapAll = await getDocs(qAll);
+    snapAll.forEach(d => {
       totals[u] += d.data().hours;
     });
   }
 
+  /* ---- UPDATE UI ---- */
   arunTotalEl.innerText = totals.arun + "h";
   krutiTotalEl.innerText = totals.kruti + "h";
 
@@ -78,7 +97,7 @@ async function loadData() {
   krutiBar.style.width = (totals.kruti / max) * 100 + "%";
 }
 
-/* ---------- COUNTER ---------- */
+/* ---------- COUNTER (90 DAYS FROM START) ---------- */
 const START_KEY = "challengeStart";
 
 function getStartDate() {
