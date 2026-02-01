@@ -1,12 +1,23 @@
-const quotes = [
-  "Discipline beats motivation.",
+const QUOTES = [
+  "Discipline is choosing what you want most over what you want now.",
   "No zero days.",
-  "You are competing with yesterday.",
-  "Consistency is power.",
-  "Small steps every day.",
-  "Do it even when you don't feel like it.",
-  "90 days can change everything."
+  "Your future is created today, not tomorrow.",
+  "Small steps every day lead to big change.",
+  "Consistency beats intensity.",
+  "You are competing with who you were yesterday.",
+  "90 days of pain, lifetime of pride.",
+  "Focus. Execute. Repeat.",
+  "You didn’t come this far to stop."
 ];
 
-const index = new Date().getDate() % quotes.length;
-document.getElementById("quote").innerText = quotes[index];
+const grid = document.getElementById("quotes-grid");
+
+if (grid) {
+  grid.innerHTML = "";
+  QUOTES.forEach(q => {
+    const box = document.createElement("div");
+    box.className = "quote-box";
+    box.innerText = q;
+    grid.appendChild(box);
+  });
+}
