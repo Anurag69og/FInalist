@@ -183,4 +183,12 @@ button {
   .counter {
     font-size: 13px;
   }
+  #login-screen.hidden {
+  display: none !important;
+}
+
+#dashboard {
+  min-height: 100vh;
+}
+  
 }
