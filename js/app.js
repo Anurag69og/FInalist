@@ -131,10 +131,7 @@ setTimeout(loadData, 1500);
 /* ---------- MOTIVATION QUOTES (FINAL FIX) ---------- */
 const QUOTES = [
   "Oieee padho padho, cheezein milengi bahut saari 😤📚",
-  "Mobile baad me, future pehle 📵➡️🚀",
-  "Padh le bhai, regret mehenga hota hai 😭",
-  "Aaj ka struggle hi kal ka flex hai 💯",
-  "90 din chupchaap grind, phir noise hi noise 😎",
+  "Mobile baad me, future pehle 📵",
   "Roz thoda, par roz pakka.",
 ];
 
