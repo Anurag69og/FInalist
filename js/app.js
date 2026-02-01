@@ -12,6 +12,18 @@ const krutiBar = document.getElementById("bar-kruti");
 const arunTotalEl = document.getElementById("arun-total");
 const krutiTotalEl = document.getElementById("kruti-total");
 
+/* ---------- HOURS OPTIONS (3.5 → 13.5) ---------- */
+function generateHours() {
+  hoursSelect.innerHTML = `<option value="">Select hours</option>`;
+  let h = 3.5;
+  for (let i = 0; i < 20; i++) {
+    hoursSelect.innerHTML += `<option value="${h}">${h} hrs</option>`;
+    h += 0.5;
+  }
+}
+generateHours();
+
+/* ---------- DATE ---------- */
 function today() {
   return new Date().toISOString().split("T")[0];
 }
@@ -21,10 +33,14 @@ submitBtn.onclick = async () => {
   const hours = hoursSelect.value;
   if (!hours) return alert("Select hours");
 
-  const user = window.currentUser;
-  const ref = doc(db, "users", user, today());
+  if (!window.currentUser) {
+    alert("User not ready, refresh page");
+    return;
+  }
 
+  const ref = doc(db, "users", window.currentUser, today());
   await setDoc(ref, { hours: Number(hours) });
+
   await loadData();
   alert("Saved!");
 };
@@ -44,13 +60,13 @@ async function loadData() {
     );
 
     const snap = await getDocs(q);
-    snap.forEach(doc => {
+    snap.forEach(d => {
       if (u === window.currentUser) {
         const li = document.createElement("li");
-        li.innerHTML = `<span>${doc.id}</span><span>${doc.data().hours}h</span>`;
+        li.innerHTML = `<span>${d.id}</span><span>${d.data().hours}h</span>`;
         historyEl.appendChild(li);
       }
-      totals[u] += doc.data().hours;
+      totals[u] += d.data().hours;
     });
   }
 
@@ -62,21 +78,31 @@ async function loadData() {
   krutiBar.style.width = (totals.kruti / max) * 100 + "%";
 }
 
-/* ---------- COUNTERS ---------- */
+/* ---------- COUNTER ---------- */
+const START_KEY = "challengeStart";
+
+function getStartDate() {
+  let s = localStorage.getItem(START_KEY);
+  if (s) return new Date(s);
+
+  const now = new Date();
+  localStorage.setItem(START_KEY, now.toISOString());
+  return now;
+}
+
 function updateCounter() {
-  const start = new Date("2026-02-01");
-  const end = new Date("2026-05-01");
+  const start = getStartDate();
   const now = new Date();
 
   const passed = Math.floor((now - start) / 86400000) + 1;
-  const left = Math.max(0, Math.floor((end - now) / 86400000));
+  const left = Math.max(0, 90 - passed);
 
   document.getElementById("day-progress").innerText = `Day ${passed} / 90`;
   document.getElementById("day-left").innerText = `${left} days left`;
 }
 
 updateCounter();
-setInterval(updateCounter, 60 * 1000);
+setInterval(updateCounter, 60000);
 
-window.loadData = loadData;
+/* ---------- AUTO LOAD ---------- */
 setTimeout(loadData, 1500);
