@@ -31,6 +31,8 @@ generateHours();
 
 /* ---------- DATE ---------- */
 function today() {
+  const testDate = localStorage.getItem("TEST_DATE");
+  if (testDate) return testDate;
   return new Date().toISOString().split("T")[0];
 }
 
