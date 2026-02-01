@@ -1,4 +1,4 @@
-/* ========== RESET ========== */
+/* ================= RESET ================= */
 * {
   margin: 0;
   padding: 0;
@@ -10,9 +10,10 @@ body {
   background: #0d0d0d;
   color: #eaeaea;
   min-height: 100vh;
+  overflow: hidden;
 }
 
-/* ========== HELPERS ========== */
+/* ================= HELPERS ================= */
 .hidden {
   display: none !important;
 }
@@ -25,7 +26,7 @@ body {
   box-shadow: 0 0 0 1px #222;
 }
 
-/* ========== LOGIN ========== */
+/* ================= LOGIN ================= */
 #login-screen {
   min-height: 100vh;
   display: flex;
@@ -60,14 +61,14 @@ body {
   cursor: pointer;
 }
 
-/* ========== DASHBOARD ========== */
+/* ================= DASHBOARD ================= */
 #dashboard {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-/* ========== HEADER ========== */
+/* ================= HEADER ================= */
 header {
   display: flex;
   justify-content: space-between;
@@ -104,23 +105,24 @@ header {
   cursor: pointer;
 }
 
-/* ========== GRID LAYOUT ========== */
+/* ================= GRID ================= */
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
   padding: 16px;
   flex: 1;
+  min-height: 0;
 }
 
 .left,
 .right {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  min-height: 0;
 }
 
-/* ========== INPUT ========== */
+/* ================= INPUT ================= */
 select,
 button {
   width: 100%;
@@ -142,7 +144,7 @@ button {
   cursor: pointer;
 }
 
-/* ========== HISTORY ========== */
+/* ================= HISTORY ================= */
 #history {
   list-style: none;
   font-size: 14px;
@@ -155,7 +157,7 @@ button {
   border-bottom: 1px dashed #333;
 }
 
-/* ========== RANKING ========== */
+/* ================= RANKING ================= */
 .bar {
   display: grid;
   grid-template-columns: 60px 1fr 50px;
@@ -186,40 +188,62 @@ button {
   background: linear-gradient(90deg, #a855f7, #ec4899);
 }
 
-/* ========== QUOTES SECTION (FULL SPACE FILL) ========== */
+/* ================= MOTIVATION (FINAL FIX) ================= */
+.left {
+  flex: 1;
+  min-height: 0;
+}
+
 .quotes-section {
   flex: 1;
   display: flex;
   flex-direction: column;
+  min-height: 0;
 }
 
 .quotes-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 14px;
-  margin-top: 12px;
   flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-auto-rows: 1fr;
+  gap: 16px;
+  overflow-y: auto;
+  padding-right: 4px;
 }
 
+/* ================= QUOTE BOX ================= */
 .quote-box {
   background: linear-gradient(145deg, #0f0f0f, #151515);
   border: 1px solid #222;
-  padding: 14px;
+  padding: 16px;
   border-radius: 14px;
   font-size: 14px;
   color: #dbeafe;
   line-height: 1.4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   transition: 0.3s;
+  animation: float 6s ease-in-out infinite;
 }
 
 .quote-box:hover {
-  transform: translateY(-4px) scale(1.02);
+  transform: translateY(-6px) scale(1.04);
   border-color: #6366f1;
-  box-shadow: 0 0 0 1px rgba(99,102,241,0.3);
+  box-shadow: 0 0 0 1px rgba(99,102,241,0.4);
 }
 
-/* ========== MOBILE ========== */
+/* subtle motion */
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* ================= MOBILE ================= */
 @media (max-width: 768px) {
+  body { overflow: auto; }
+
   .grid {
     grid-template-columns: 1fr;
   }
@@ -232,24 +256,4 @@ button {
   .counter {
     font-size: 13px;
   }
-  
-  /* ========== FORCE QUOTES TO FILL SPACE (FINAL FIX) ========== */
-
-.left {
-  flex: 1;
-  min-height: 0;
-}
-
-.left .quotes-section {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-}
-
-.left .quotes-grid {
-  flex: 1;
-  overflow-y: auto;
-}
-  
 }
