@@ -15,11 +15,12 @@ const errorBox = document.getElementById("login-error");
 
 let isLoggingIn = false;
 
-// global user setter
+/* ---------- GLOBAL USER ---------- */
 window.setUser = (u) => {
   window.currentUser = u;
 };
 
+/* ---------- LOGIN ---------- */
 loginBtn.onclick = async () => {
   if (isLoggingIn) return;
   isLoggingIn = true;
@@ -42,15 +43,23 @@ loginBtn.onclick = async () => {
   }
 };
 
+/* ---------- LOGOUT ---------- */
 logoutBtn.onclick = async () => {
   await signOut(auth);
 };
 
+/* ---------- AUTH STATE ---------- */
 onAuthStateChanged(auth, (user) => {
   if (user) {
     loginScreen.classList.add("hidden");
     dashboard.classList.remove("hidden");
-    window.setUser(user.email.split("@")[0]);
+
+    const username = user.email.split("@")[0];
+    window.setUser(username);
+
+    /* 🔥 IMPORTANT: notify app + quotes */
+    window.dispatchEvent(new Event("user-ready"));
+
     isLoggingIn = false;
   } else {
     loginScreen.classList.remove("hidden");
