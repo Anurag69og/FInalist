@@ -232,4 +232,24 @@ button {
   .counter {
     font-size: 13px;
   }
+  
+  /* ========== FORCE QUOTES TO FILL SPACE (FINAL FIX) ========== */
+
+.left {
+  flex: 1;
+  min-height: 0;
+}
+
+.left .quotes-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.left .quotes-grid {
+  flex: 1;
+  overflow-y: auto;
+}
+  
 }
