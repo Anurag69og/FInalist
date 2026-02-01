@@ -12,7 +12,9 @@ body {
 }
 
 /* ========== HELPERS ========== */
-.hidden { display: none; }
+.hidden {
+  display: none !important;
+}
 
 .card {
   background: #161616;
@@ -57,6 +59,11 @@ body {
   cursor: pointer;
 }
 
+/* ========== DASHBOARD ========== */
+#dashboard {
+  min-height: 100vh;
+}
+
 /* ========== HEADER ========== */
 header {
   display: flex;
@@ -64,6 +71,10 @@ header {
   align-items: center;
   padding: 16px;
   border-bottom: 1px solid #222;
+  position: sticky;
+  top: 0;
+  background: #0d0d0d;
+  z-index: 10;
 }
 
 .logo {
@@ -97,13 +108,15 @@ header {
   padding: 16px;
 }
 
-.left, .right {
+.left,
+.right {
   display: flex;
   flex-direction: column;
 }
 
 /* ========== INPUT ========== */
-select, button {
+select,
+button {
   width: 100%;
   margin-top: 10px;
   padding: 10px;
@@ -123,11 +136,34 @@ button {
   cursor: pointer;
 }
 
-/* ========== QUOTE ========== */
+/* ========== QUOTE (MAIN) ========== */
 .quote-card {
   font-style: italic;
   color: #cbd5f5;
   border-left: 4px solid #6366f1;
+}
+
+/* ========== QUOTES GRID (NEW) ========== */
+#quotes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.quote-box {
+  background: #0f0f0f;
+  border: 1px solid #222;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 13px;
+  color: #cbd5f5;
+  transition: 0.3s;
+}
+
+.quote-box:hover {
+  transform: translateY(-3px);
+  border-color: #6366f1;
 }
 
 /* ========== HISTORY ========== */
@@ -166,8 +202,13 @@ button {
   transition: width 0.6s ease;
 }
 
-.blue { background: linear-gradient(90deg, #3b82f6, #06b6d4); }
-.purple { background: linear-gradient(90deg, #a855f7, #ec4899); }
+.blue {
+  background: linear-gradient(90deg, #3b82f6, #06b6d4);
+}
+
+.purple {
+  background: linear-gradient(90deg, #a855f7, #ec4899);
+}
 
 /* ========== MOBILE ========== */
 @media (max-width: 768px) {
@@ -183,12 +224,4 @@ button {
   .counter {
     font-size: 13px;
   }
-  #login-screen.hidden {
-  display: none !important;
-}
-
-#dashboard {
-  min-height: 100vh;
-}
-  
 }
